@@ -1,0 +1,178 @@
+:root {
+  --bg: #f5f5f5;
+  --g: #92ed90;
+  --gdk: lightgreen;
+  --r: lightsalmon;
+  --rdk: salmon;
+  --b: lightblue;
+  --bdk: #1be0d7;
+  --gr: #ddd;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  font-family: sans-serif;
+}
+
+header,
+footer {
+  height: 72px;
+  position: fixed;
+  width: calc(100vw - 8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  margin: 4px;
+  border-radius: 4px;
+}
+
+header {
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+footer {
+  bottom: 0;
+  left: 0;
+}
+header h1 {
+  font-size: clamp(12px, 7.5vw, 32px);
+}
+header h2 {
+  margin: 0px 6px;
+  font-size: clamp(6px, 4.5vw, 18px);
+}
+
+main {
+  margin: 72px clamp(10vw, 5vw, 40vw);
+  padding-top: 10px;
+}
+
+section {
+  margin: 0 auto;
+  max-width: 960px;
+}
+
+textarea,
+textarea:focus,
+textarea:active {
+  border: none;
+  background: none;
+  outline: none;
+  width: 100%;
+  resize: none;
+  /* border: 1px solid cyan; */
+}
+
+.replies {
+  background: var(--r);
+  border-radius: 3px;
+  color: var(--bg);
+}
+
+.pad {
+  padding: 5px 10px;
+}
+.rnd {
+  border-radius: 6px;
+}
+.wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-reply-wrap {
+  background: var(--r);
+}
+.ai-reply {
+  border-left: white solid 4px;
+}
+
+.c-b {
+  color: var(--b);
+}
+.c-g {
+  color: var(--g);
+}
+.c-r {
+  color: var(--r);
+}
+.c-gr {
+  color: var(--gr);
+}
+.c-bg {
+  color: white;
+}
+.bg-bg {
+  background-color: var(--bg);
+}
+.bg-0 {
+  background: none;
+}
+.bg-g {
+  background: linear-gradient(140deg, var(--g), var(--bdk));
+}
+.bg-b {
+  background: linear-gradient(140deg, var(--bdk), var(--b));
+}
+.bg-r {
+  background: linear-gradient(140deg, var(--r), var(--rdk));
+}
+.bg-gr {
+  background: var(--gr);
+}
+.b-0 {
+  border: none;
+}
+.b-l-g {
+  border-left: var(--g) solid 3px !important;
+}
+.b-l-b {
+  border-left: var(--b) solid 3px !important;
+}
+.b-l-r {
+  border-left: var(--r) solid 3px !important;
+}
+.b-l-gr {
+  border-left: var(--gr) solid 3px !important;
+}
+.p-0 {
+  padding: 0;
+}
+.p-1 {
+  padding: 0.125rem;
+}
+.p-2 {
+  padding: 0.25rem;
+}
+.p-3 {
+  padding: 0.375rem;
+}
+.p-4 {
+  padding: 0.5rem;
+}
+.p-5 {
+  padding: 0.75rem;
+}
+.p-6 {
+  padding: 0.875rem;
+}
+.p-7 {
+  padding: 0.1rem;
+}
+.pill {
+  padding: 3px 6px;
+}
+.w-full {
+  width: 100%;
+}
+.text-start {
+  text-align: start;
+}
