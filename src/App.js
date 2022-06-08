@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { getEngines, postPrompt } from "../openAi";
-import "./styles.css";
+import React, { useState, useEffect } from 'react';
+import { getEngines, postPrompt } from '../openAi';
+import './styles.css';
 
-function Prompt({ model = "curie", replies, setReplies }) {
-  const [prompt, setPrompt] = useState("");
-  const [rows, setRows] = useState(1);
-  const styles = { waiting: "b-l-gr", active: "b-l-g", error: "b-l-r" };
+function Prompt({ model = 'curie', replies, setReplies }) {
+  const [prompt, setPrompt] = useState('');
+  const [rows, setRows] = useState(4);
+  const styles = { waiting: 'b-l-gr', active: 'b-l-g', error: 'b-l-r' };
   const [bStyle, setBStyle] = useState(styles.waiting);
 
   const updatePromptStyle = () => {
@@ -14,7 +14,7 @@ function Prompt({ model = "curie", replies, setReplies }) {
 
   const addReply = async () => {
     const response = await postPrompt(model, prompt);
-    console.log("replied", model, response.choices);
+    console.log('replied', model, response.choices);
     setReplies([...response.choices, ...replies]);
   };
 
@@ -23,17 +23,16 @@ function Prompt({ model = "curie", replies, setReplies }) {
       className="pad"
       onSubmit={(e) => {
         e.preventDefault();
-        console.log("submitted", model, prompt);
+        console.log('submitted', model, prompt);
         addReply();
-      }}
-    >
+      }}>
       <textarea
         rows={rows}
         className={`${bStyle} pad`}
         value={prompt}
         onInput={(e) => {
           setPrompt(e.target.value);
-          setRows(10);
+          // setRows(10);
           updatePromptStyle();
         }}
       />
@@ -50,7 +49,7 @@ function EngineDetail({ engine }) {
 
 export default function App() {
   const [res, setRes] = useState([]);
-  const [model, setModel] = useState("curie");
+  const [model, setModel] = useState('curie');
   const [replies, setReplies] = useState([]);
 
   useEffect(() => {
@@ -75,8 +74,7 @@ export default function App() {
             <select
               className="b-0 bg-bg pad rnd"
               defaultValue=""
-              onChange={(e) => setModel(e.target.value)}
-            >
+              onChange={(e) => setModel(e.target.value)}>
               <option value="" disabled>
                 Select an Engine
               </option>
