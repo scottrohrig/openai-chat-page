@@ -14,7 +14,13 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+a, select, input, textarea, button {
+  color: var(--text);
+}
 .App {
   font-family: sans-serif;
 }
@@ -170,9 +176,43 @@ textarea:active {
 .pill {
   padding: 3px 6px;
 }
+.mt-1 {
+  margin-top: 3px;
+}
 .w-full {
   width: 100%;
 }
 .text-start {
   text-align: start;
+}
+.italic {
+  font-style: italic;
+}
+.pointer {
+  cursor: pointer;
+}
+.fa-moon {color: #3d238e}
+.fa-sun {color: #fbff00}
+
+.light {
+  --bg: #f5f5f5;
+  --g: #92ed90;
+  --gdk: lightgreen;
+  --r: lightsalmon;
+  --rdk: salmon;
+  --b: lightblue;
+  --bdk: #1be0d7;
+  --gr: #ddd;
+  --text: black;
+}
+.dark {
+  --bg: #090e13;
+  --g: #0c3637;
+  --gdk: rgb(127, 127, 127);
+  --r: rgb(15, 4, 43);
+  --rdk: rgb(27, 5, 2);
+  --b: rgb(28, 19, 81);
+  --bdk: #032044;
+  --gr: rgb(40, 40, 40);
+  --text: white;
 }

@@ -51,14 +51,19 @@ export default function App() {
   const [res, setRes] = useState([]);
   const [model, setModel] = useState('curie');
   const [replies, setReplies] = useState([]);
+  const [theme, setTheme] = useState('moon');
 
-  useEffect(() => {
-    async function doUpdate() {
-      const engines = await getEngines();
-      const jsonEngines = engines.data;
-      setRes(jsonEngines);
+  const toggleTheme = () => {
+    let bodyClasses = document.body.classList
+    if (bodyClasses.contains('light')) {
+      bodyClasses.replace('light', 'dark')
+      setTheme('sun')
     }
-    doUpdate();
+    else if (bodyClasses.contains('dark')) {
+      bodyClasses.replace('dark', 'light')
+      setTheme('moon')
+    }
+  }
   }, []);
 
   return (
@@ -66,6 +71,10 @@ export default function App() {
       <header className="bg-g c-bg">
         <h1 className="">Chatbot</h1>
         <h2>Select an engine and type in a prompt</h2>
+        {/* <i className="fa-solid fa-moon"></i> */}
+        <i className={`fa-solid fa-${theme}`} onClick={toggleTheme}></i>
+        {/* <i className="fa-solid fa-bars"></i>
+        <i className="fa-solid fa-times"></i> */}
       </header>
       <main>
         <section id="enginesSection" className="bg-b pad rnd">
