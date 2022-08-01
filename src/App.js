@@ -2,6 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { getEngines, postPrompt } from '../openAi';
 import './styles.css';
 
+const load = () => {
+  const storage = localStorage.getItem('replies')
+  return JSON.parse(storage)
+}
+
+/**
+ * Renders the chat's text input form. Handles submitting Prompts
+ * @param {{model:String, replies:Array<{text}>, setReplies}} param0 
+ * @returns 
+ */
 function Prompt({ model = 'curie', replies, setReplies }) {
   const [prompt, setPrompt] = useState('');
   const [rows, setRows] = useState(4);
@@ -12,11 +22,20 @@ function Prompt({ model = 'curie', replies, setReplies }) {
     setBStyle(prompt.length > 0 ? styles.active : styles.waiting);
   };
 
+  /** sends prompt text to `OpenAi`, 
+   * then adds the data to the array of replies */
   const addReply = async () => {
     const response = await postPrompt(model, prompt);
-    console.log('replied', model, response.choices);
-    setReplies([...response.choices, ...replies]);
+    console.log('replied', model, response.choices); // [{finish_reason, index, logprobs, text, Prototype}]
+    await setReplies([{ model, prompt, text: response.choices[0].text }, ...replies]);
   };
+
+  // save replies to local storage
+  useEffect(() => {
+    (async () => {
+      if(replies.length) localStorage.setItem('replies', JSON.stringify(replies))
+    })()
+  }, [replies])
 
   return (
     <form
@@ -36,19 +55,24 @@ function Prompt({ model = 'curie', replies, setReplies }) {
           updatePromptStyle();
         }}
       />
-      <button class="b-0 bg-0 b-l-b text-start pad w-full" type="submit">
+      <button className="b-0 bg-0 b-l-b text-start pad w-full pointer" type="submit">
         Send
       </button>
     </form>
   );
 }
 
+/**
+ * Returns an option with the engine name as the value and textContent
+ * @param {{object: 'engine', id: String, owner: String, ready:Boolean}} param0 
+ * @returns 
+ */
 function EngineDetail({ engine }) {
   return <option value={engine.id}>{engine.id}</option>;
 }
 
 export default function App() {
-  const [res, setRes] = useState([]);
+  const [engines, setEngines] = useState([]);
   const [model, setModel] = useState('curie');
   const [replies, setReplies] = useState([]);
   const [theme, setTheme] = useState('moon');
@@ -64,6 +88,17 @@ export default function App() {
       setTheme('moon')
     }
   }
+
+  useEffect(() => {
+    (async () => {
+      const response = await getEngines();
+      // sort engines in reverse alphabetical order
+      // `.sort((a,b) => a.id - b.id)` didn't work as expected for some reason...
+      const data = response.data.sort((a, b) => (a.id <= b.id) ? 1 : -1)
+      setEngines(data);
+    })();
+
+    setReplies(load());
   }, []);
 
   return (
@@ -87,7 +122,8 @@ export default function App() {
               <option value="" disabled>
                 Select an Engine
               </option>
-              {res.map((engine, i) => (
+              {/* List all the available OpenAi Engines */}
+              {engines.map((engine, i) => (
                 <React.Fragment key={engine.id}>
                   <EngineDetail engine={engine} />
                 </React.Fragment>
@@ -101,11 +137,18 @@ export default function App() {
         {replies.length > 0 && (
           <section className="bg-r rnd pad c-bg">
             {replies.map((reply, i) => {
+              let shaveFront = reply.text.split('\n')
+              let text = shaveFront.slice(2, shaveFront.length)
               return (
-                <p className="b-l-gr pad" key={i}>
-                  <p>Reply {replies.length - i}:</p>
-                  {reply.text}
-                </p>
+                <React.Fragment key={i}>
+                  <h3 className='italic mt-1'>{replies.length - i}: {reply.prompt}</h3>
+
+
+                  <div className="ai-reply pad">
+                    {text.map((r, j) => !r ? <br /> : <p key={j}>{r}</p>)}
+                  </div>
+                  <h5 style={{ textAlign: 'right' }}>– {reply.model}</h5>
+                </React.Fragment>
               );
             })}
           </section>
