@@ -14,11 +14,11 @@ This shows how different AI Engines responded to that prompt
     
 - Add your api key
 
-Because this was small practice exercise built on Codesandbox.io, I hardcoded the api key and obnly inlcuded it when sampling data. I removed it when adding the project to GitHub. You can add dotenv and add your key to a `.env` file. Or simply add your key to the configuration in `openAi.js`
-  - install `dotenv` and add it to 
+Because this was small practice exercise built on Codesandbox.io, I hardcoded the api key and only inlcuded it when sampling data. I removed it when adding the project to GitHub. You can add dotenv and add your key to a `.env` file. Or simply add your key to the configuration in `openAi.js`
   - create a `.env` file and add your key 
   
   ```
-  OPENAI_API_KEY='your-api-key'
+  REACT_APP_OPENAI_API_KEY='your-api-key'
   ``` 
 
+See [create react app docs](https://create-react-app.dev/docs/adding-custom-environment-variables/) for more info.
