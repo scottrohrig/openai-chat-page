@@ -33,7 +33,7 @@ function Prompt({ model = 'curie', replies, setReplies }) {
   // save replies to local storage
   useEffect(() => {
     (async () => {
-      if(replies.length) localStorage.setItem('replies', JSON.stringify(replies))
+      if(replies && replies.length) localStorage.setItem('replies', JSON.stringify(replies))
     })()
   }, [replies])
 
@@ -139,7 +139,7 @@ export default function App() {
         <section className="prompt pad">
           <Prompt model={model} replies={replies} setReplies={setReplies} />
         </section>
-        {replies.length > 0 && (
+        {replies && replies.length > 0 && (
           <section className="bg-r rnd pad c-bg">
             {replies.map((reply, i) => {
               let shaveFront = reply.text.split('\n')
