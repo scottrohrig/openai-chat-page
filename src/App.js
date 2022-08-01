@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getEngines, postPrompt } from '../openAi';
+import { getEngines, postPrompt } from './openAi';
 import './styles.css';
 
 const load = () => {
@@ -14,7 +14,7 @@ const load = () => {
  */
 function Prompt({ model = 'curie', replies, setReplies }) {
   const [prompt, setPrompt] = useState('');
-  const [rows, setRows] = useState(4);
+  const [rows, setRows] = useState(1);
   const styles = { waiting: 'b-l-gr', active: 'b-l-g', error: 'b-l-r' };
   const [bStyle, setBStyle] = useState(styles.waiting);
 
@@ -40,6 +40,7 @@ function Prompt({ model = 'curie', replies, setReplies }) {
   return (
     <form
       className="pad"
+      type='submit'
       onSubmit={(e) => {
         e.preventDefault();
         console.log('submitted', model, prompt);
@@ -51,8 +52,12 @@ function Prompt({ model = 'curie', replies, setReplies }) {
         value={prompt}
         onInput={(e) => {
           setPrompt(e.target.value);
-          // setRows(10);
+          setRows(prompt.length > 0 ? (prompt.split('\n').length) + 1 : 0);
           updatePromptStyle();
+        }}
+        onKeyUp={(e) => {
+          if (e.key === 'Enter' && !e.shiftKey) return          
+          else if (e.key === 'Enter' && e.shiftKey) e.preventDefault()
         }}
       />
       <button className="b-0 bg-0 b-l-b text-start pad w-full pointer" type="submit">
